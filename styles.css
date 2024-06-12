@@ -1,61 +1,31 @@
+@font-face {
+    font-family: 'Cyberpunk';
+    src: url('fonts/Cyberpunk.otf') format('opentype');
+}
+
 body {
     margin: 0;
-    background: black;
-    color: #0f0; /* Neon green text, typical of cyberpunk themes */
-    font-family: 'Orbitron', sans-serif; /* A futuristic font */
+    background: #330000; /* Dark red background */
+    font-family: 'Cyberpunk', sans-serif; /* Using the custom Cyberpunk font */
 }
 
-nav ul {
-    list-style-type: none;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-}
-
-nav li {
-    display: inline;
-    margin-left: 20px;
-}
-
-nav a {
-    color: #0f0;
-    text-decoration: none;
-}
-
-#viewport {
-    width: 100vw;
-    height: 100vh;
-    background-color: #000; /* Set a background color to see the div area */
-}
-#titleScreen {
+.titleScreen {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #8a2387, #e94057, #f27121); /* Purple to orange gradient */
-    font-family: 'Orbitron', sans-serif;
+    color: #00ffd2; /* Cyan color for text */
+    position: relative;
+    overflow: hidden;
 }
 
 .glitch {
-    font-size: 72px; /* Adjust size as needed */
-    font-family: 'Orbitron', sans-serif; /* Consider a more thematic font if available */
-    color: white;
+    font-size: 100px; /* Larger font size for title */
+    color: #f8ef02; /* Neon yellow for the main text */
     position: relative;
-    display: inline-block;
     user-select: none;
-}
-
-.chen {
-    color: #00ff00; /* Bright green, or use another vibrant color */
-}
-
-.year {
-    display: block; /* Makes '1999' appear under 'Chen' */
-    color: #ff00ff; /* Pink color */
-    font-size: 48px; /* Smaller than the main text */
-    position: relative;
-    top: -18px; /* Adjust this value to align it as you like */
+    white-space: nowrap;
 }
 
 .glitch::before,
@@ -65,101 +35,92 @@ nav a {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    color: white;
+    overflow: hidden;
+    color: #00ffd2; /* Cyan color */
+    opacity: 0.7; /* Making the shadow layers slightly transparent for depth */
 }
 
 .glitch::before {
-    left: 2px;
-    text-shadow: -2px 0 red;
-    animation: glitchTop 1.5s infinite;
+    left: -2px;
+    text-shadow: 3px 0 cyan;
+    animation: glitch-layer1 2.5s infinite linear alternate-reverse;
 }
 
 .glitch::after {
-    left: -2px;
-    text-shadow: 2px 0 blue;
-    animation: glitchBot 1.5s infinite;
+    left: 2px;
+    text-shadow: -3px 0 cyan;
+    animation: glitch-layer2 2.5s infinite linear alternate;
 }
 
-@keyframes glitchTop {
+.year {
+    color: #00ffd2; /* Cyan color to match the Wei Chen text shadow */
+    font-size: 60px; /* Size adjustment for the year */
+    position: relative;
+    bottom: -20px; /* Adjust positioning to sit right under 'Chen' */
+}
+
+@keyframes glitch-layer1 {
     0%, 100% {
-        clip-path: polygon(0 25%, 100% 20%, 100% 85%, 0 90%);
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
     }
     50% {
-        clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
     }
 }
 
-@keyframes glitchBot {
+@keyframes glitch-layer2 {
     0%, 100% {
-        clip-path: polygon(0 10%, 100% 0, 100% 75%, 0 85%);
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
     }
     50% {
-        clip-path: polygon(0 30%, 100% 30%, 100% 30%, 0 30%);
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
     }
 }
 
-@keyframes glitchAnimation {
+.button {
+    background-color: #f27121; /* Bright orange */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.button:hover {
+    background-color: #e94057; /* Lighter red */
+}
+
+.background-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #000 25%, transparent 25%) 0 0,
+                linear-gradient(225deg, #000 25%, transparent 25%) 0 0,
+                linear-gradient(315deg, #000 25%, transparent 25%) 0 0,
+                linear-gradient(45deg, #000 25%, #330000 25%) 0 0;
+    background-size: 60px 60px;
+    z-index: -1;
+    animation: glitch-background 5s infinite;
+}
+
+@keyframes glitch-background {
     0%, 100% {
-        text-shadow:
-            -1px -1px 0px #ff00ff,
-            1px -1px 0px #ff0000,
-            -1px 1px 0px #0000ff,
-            1px 1px 0px #00ff00;
-        transform: translate(0px, 0px);
+        background-position: 0 0, 0 0, 0 0, 0 0;
     }
     10%, 90% {
-        text-shadow:
-            -1px -1px 0px #ff0000,
-            1px -1px 0px #0000ff,
-            -1px 1px 0px #00ff00,
-            1px 1px 0px #ff00ff;
-        transform: translate(-1px, 1px);
+        background-position: -30px -30px, 30px 30px, -30px -30px, 30px 30px;
     }
     20%, 80% {
-        text-shadow:
-            -1px -1px 0px #0000ff,
-            1px -1px 0px #00ff00,
-            -1px 1px 0px #ff00ff,
-            1px 1px 0px #ff0000;
-        transform: translate(-1px, -1px);
+        background-position: -30px 30px, 30px -30px, 30px 30px, -30px -30px;
     }
     30%, 70% {
-        text-shadow:
-            -1px -1px 0px #00ff00,
-            1px -1px 0px #ff00ff,
-            -1px 1px 0px #ff0000,
-            1px 1px 0px #0000ff;
-        transform: translate(1px, 3px);
+        background-position: 30px 30px, -30px -30px, 30px -30px, -30px 30px;
     }
     40%, 60% {
-        text-shadow:
-            -1px -1px 0px #ff00ff,
-            1px -1px 0px #0000ff,
-            -1px 1px 0px #00ff00,
-            1px 1px 0px #ff0000;
-        transform: translate(1px, -1px);
+        background-position: 30px -30px, -30px 30px, -30px 30px, 30px -30px;
     }
 }
-
-.glitch {
-    animation: glitchAnimation 2.5s infinite;
-}
-
-
-button {
-    background-color: #f27121; /* Vivid orange */
-    border: 2px solid #FFFFFF; /* Added border for visibility */
-    color: white;
-    font-size: 20px; /* Larger text for better visibility */
-    padding: 15px 30px; /* Larger padding for a better click area */
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-}
-
-button:hover {
-    background-color: #e94057; /* Lighter orange on hover */
-}
-
-
-
