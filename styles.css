@@ -1,4 +1,9 @@
 @font-face {
+    font-family: 'BlenderProBook';
+    src: url('fonts/BlenderProBook.woff2') format('woff2');
+}
+
+@font-face {
     font-family: 'Cyberpunk';
     src: url('fonts/Cyberpunk.otf') format('opentype');
 }
@@ -27,6 +32,7 @@ body {
     user-select: none;
     white-space: nowrap;
     z-index: 3; /* Ensure yellow text is on top */
+    animation: glitchAnimation 2.5s infinite;
 }
 
 .glitch::before,
@@ -44,43 +50,24 @@ body {
 .glitch::before {
     left: -2px;
     text-shadow: 3px 0 cyan;
-    animation: glitch-layer1 2.5s infinite linear alternate-reverse;
-    z-index: 1; /* Lower z-index for background layer */
+    z-index: 2; /* Middle layer */
 }
 
 .glitch::after {
     left: 2px;
     text-shadow: -3px 0 cyan;
-    animation: glitch-layer2 2.5s infinite linear alternate;
-    z-index: 2; /* Middle layer */
+    z-index: 1; /* Lower z-index for background layer */
 }
 
 .year {
+    font-family: 'BlenderProBook'; /* Specific font for the year */
     color: #00ffd2; /* Cyan color to match the Wei Chen text shadow */
     font-size: 60px; /* Size adjustment for the year */
     position: relative;
     top: -20px; /* Adjust positioning */
     left: 50%; /* Centering under 'Chen' */
     transform: translateX(-50%); /* Precise centering */
-    z-index: 3; /* Ensure text is on top */
-}
-
-@keyframes glitch-layer1 {
-    0%, 100% {
-        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-    }
-    50% {
-        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-    }
-}
-
-@keyframes glitch-layer2 {
-    0%, 100% {
-        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-    }
-    50% {
-        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-    }
+    z-index: 4; /* Ensure text is on top */
 }
 
 .button {
@@ -98,35 +85,45 @@ body {
     background-color: #e94057; /* Lighter red */
 }
 
-.background-glitch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, #000 25%, transparent 25%) 0 0,
-                linear-gradient(225deg, #000 25%, transparent 25%) 0 0,
-                linear-gradient(315deg, #000 25%, transparent 25%) 0 0,
-                linear-gradient(45deg, #000 25%, #330000 25%) 0 0;
-    background-size: 60px 60px;
-    z-index: 0; /* Set background under all text */
-    animation: glitch-background 5s infinite;
-}
-
-@keyframes glitch-background {
+@keyframes glitchAnimation {
     0%, 100% {
-        background-position: 0 0, 0 0, 0 0, 0 0;
+        text-shadow:
+            -1px -1px 0px #ff00ff,
+            1px -1px 0px #ff0000,
+            -1px 1px 0px #0000ff,
+            1px 1px 0px #00ff00;
+        transform: translate(0px, 0px);
     }
     10%, 90% {
-        background-position: -30px -30px, 30px 30px, -30px -30px, 30px 30px;
+        text-shadow:
+            -1px -1px 0px #ff0000,
+            1px -1px 0px #0000ff,
+            -1px 1px 0px #00ff00,
+            1px 1px 0px #ff00ff;
+        transform: translate(-1px, 1px);
     }
     20%, 80% {
-        background-position: -30px 30px, 30px -30px, 30px 30px, -30px -30px;
+        text-shadow:
+            -1px -1px 0px #0000ff,
+            1px -1px 0px #00ff00,
+            -1px 1px 0px #ff00ff,
+            1px 1px 0px #ff0000;
+        transform: translate(-1px, -1px);
     }
     30%, 70% {
-        background-position: 30px 30px, -30px -30px, 30px -30px, -30px 30px;
+        text-shadow:
+            -1px -1px 0px #00ff00,
+            1px -1px 0px #ff00ff,
+            -1px 1px 0px #ff0000,
+            1px 1px 0px #0000ff;
+        transform: translate(1px, 3px);
     }
     40%, 60% {
-        background-position: 30px -30px, -30px 30px, -30px 30px, 30px -30px;
+        text-shadow:
+            -1px -1px 0px #ff00ff,
+            1px -1px 0px #0000ff,
+            -1px 1px 0px #00ff00,
+            1px 1px 0px #ff0000;
+        transform: translate(1px, -1px);
     }
 }
