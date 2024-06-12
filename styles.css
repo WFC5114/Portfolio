@@ -38,14 +38,24 @@ nav a {
 }
 
 .glitch {
+    font-size: 72px; /* Adjust size as needed */
+    font-family: 'Orbitron', sans-serif; /* Consider a more thematic font if available */
     color: white;
-    font-size: 72px;  /* Increased size */
-    font-weight: bold;
     position: relative;
     display: inline-block;
-    user-select: none; /* Prevents the text from being selectable */
-    margin: 0 auto;
-    text-transform: uppercase; /* Optional: style preference */
+    user-select: none;
+}
+
+.chen {
+    color: #00ff00; /* Bright green, or use another vibrant color */
+}
+
+.year {
+    display: block; /* Makes '1999' appear under 'Chen' */
+    color: #ff00ff; /* Pink color */
+    font-size: 48px; /* Smaller than the main text */
+    position: relative;
+    top: -18px; /* Adjust this value to align it as you like */
 }
 
 .glitch::before,
@@ -88,6 +98,54 @@ nav a {
         clip-path: polygon(0 30%, 100% 30%, 100% 30%, 0 30%);
     }
 }
+
+@keyframes glitchAnimation {
+    0%, 100% {
+        text-shadow:
+            -1px -1px 0px #ff00ff,
+            1px -1px 0px #ff0000,
+            -1px 1px 0px #0000ff,
+            1px 1px 0px #00ff00;
+        transform: translate(0px, 0px);
+    }
+    10%, 90% {
+        text-shadow:
+            -1px -1px 0px #ff0000,
+            1px -1px 0px #0000ff,
+            -1px 1px 0px #00ff00,
+            1px 1px 0px #ff00ff;
+        transform: translate(-1px, 1px);
+    }
+    20%, 80% {
+        text-shadow:
+            -1px -1px 0px #0000ff,
+            1px -1px 0px #00ff00,
+            -1px 1px 0px #ff00ff,
+            1px 1px 0px #ff0000;
+        transform: translate(-1px, -1px);
+    }
+    30%, 70% {
+        text-shadow:
+            -1px -1px 0px #00ff00,
+            1px -1px 0px #ff00ff,
+            -1px 1px 0px #ff0000,
+            1px 1px 0px #0000ff;
+        transform: translate(1px, 3px);
+    }
+    40%, 60% {
+        text-shadow:
+            -1px -1px 0px #ff00ff,
+            1px -1px 0px #0000ff,
+            -1px 1px 0px #00ff00,
+            1px 1px 0px #ff0000;
+        transform: translate(1px, -1px);
+    }
+}
+
+.glitch {
+    animation: glitchAnimation 2.5s infinite;
+}
+
 
 button {
     background-color: #f27121; /* Vivid orange */
