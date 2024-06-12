@@ -15,6 +15,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #00ffd2; /* Cyan color for text */
     position: relative;
     overflow: hidden;
 }
@@ -25,10 +26,8 @@ body {
     position: relative;
     user-select: none;
     white-space: nowrap;
-    text-shadow: 3px 0 0 #00ffd2, -3px 0 0 #00ffd2; /* Cyan shadows */
 }
 
-/* Additional shadow for depth */
 .glitch::before,
 .glitch::after {
     content: attr(data-text);
@@ -38,24 +37,35 @@ body {
     width: 100%;
     overflow: hidden;
     color: #00ffd2; /* Cyan color */
-    opacity: 0.5; /* Lower opacity for depth */
+    opacity: 0.5; /* Adjust opacity for depth */
 }
 
 .glitch::before {
-    left: -5px; /* Larger offset for additional depth */
+    left: -5px;
+    text-shadow: 5px 0 cyan;
+    animation: glitch-layer 2.5s infinite linear alternate-reverse;
 }
 
 .glitch::after {
-    left: 5px; /* Larger offset for additional depth */
+    left: 5px;
+    text-shadow: -5px 0 cyan;
+    animation: glitch-layer 2.5s infinite linear alternate;
 }
 
 .year {
     color: #00ffd2; /* Cyan color to match the Wei Chen text shadow */
     font-size: 60px; /* Size adjustment for the year */
-    position: absolute;
-    top: 100%; /* Positioning directly under Chen */
-    left: 50%;
-    transform: translateX(-50%); /* Center align under Chen */
+    position: absolute; /* Adjust position to align properly */
+    top: 100px; /* Adjust top position to place '1999' under 'Chen' */
+}
+
+@keyframes glitch-layer {
+    0%, 100% {
+        clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+    }
+    50% {
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    }
 }
 
 .button {
@@ -79,29 +89,24 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #000 25%, transparent 25%) 0 0,
-                linear-gradient(225deg, #000 25%, transparent 25%) 0 0,
-                linear-gradient(315deg, #000 25%, transparent 25%) 0 0,
-                linear-gradient(45deg, #000 25%, transparent 25%) 0 0;
-    background-size: 60px 60px;
-    z-index: -1;
+    background: repeating-linear-gradient(
+        135deg,
+        #330000,
+        #330000 10px,
+        #000 10px,
+        #000 20px
+    );
     animation: glitch-background 5s infinite;
 }
 
 @keyframes glitch-background {
     0%, 100% {
-        background-position: 0 0, 0 0, 0 0, 0 0;
+        background-position: 0 0;
     }
-    10%, 90% {
-        background-position: -30px -30px, 30px 30px, -30px -30px, 30px 30px;
+    25%, 75% {
+        background-position: 50px 50px;
     }
-    20%, 80% {
-        background-position: -30px 30px, 30px -30px, 30px 30px, -30px -30px;
-    }
-    30%, 70% {
-        background-position: 30px 30px, -30px -30px, 30px -30px, -30px 30px;
-    }
-    40%, 60% {
-        background-position: 30px -30px, -30px 30px, -30px 30px, 30px -30px;
+    50% {
+        background-position: -50px -50px;
     }
 }
