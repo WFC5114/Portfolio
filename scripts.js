@@ -40,4 +40,12 @@ function animate() {
     renderer.render(scene, camera);
 }
 
+function startJourney() {
+    // Hide the title screen and show the main content
+    document.getElementById('titleScreen').style.display = 'none';
+    // Assuming you have an element with id 'viewport' where the 3D scene will be shown
+    document.getElementById('viewport').style.display = 'block';
+}
+
+
 init(); // Call init to setup our scene

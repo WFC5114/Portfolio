@@ -27,4 +27,75 @@ nav a {
     height: 100vh;
     background-color: #000; /* Set a background color to see the div area */
 }
+#titleScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #8a2387, #e94057, #f27121); /* Purple to orange gradient */
+    font-family: 'Orbitron', sans-serif;
+}
+
+.glitch {
+    color: white;
+    font-size: 48px;
+    position: relative;
+    display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    color: white;
+    overflow: hidden;
+}
+
+.glitch::before {
+    animation: glitchTop 3s infinite linear alternate-reverse;
+    top: -2px;
+    text-shadow: 1px 0 teal;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch::after {
+    animation: glitchBot 3s infinite linear alternate-reverse;
+    top: 2px;
+    text-shadow: -1px 0 red;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchTop {
+    0%, 100% {
+        left: -2px;
+    }
+    50% {
+        left: 2px;
+    }
+}
+
+@keyframes glitchBot {
+    0%, 100% {
+        left: 2px;
+    }
+    50% {
+        left: -2px;
+    }
+}
+
+button {
+    background-color: #f27121;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
 
