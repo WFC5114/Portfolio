@@ -8,13 +8,18 @@
     src: url('fonts/Cyberpunk.otf') format('opentype');
 }
 
+@font-face {
+    font-family: 'Oxanium';
+    src: url('fonts/Oxanium.woff2') format('woff2');
+}
+
 body {
     margin: 0;
-    background: #330000; /* Dark red background */
+    background: #610a0a; /* Brighter red background */
     font-family: 'Cyberpunk', sans-serif;
 }
 
-.titleScreen {
+#titleScreen {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,12 +29,24 @@ body {
     overflow: hidden;
 }
 
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #610a0a; /* Initial solid color */
+    animation: glitchBackground 2.5s infinite;
+    filter: contrast(200%) brightness(120%); /* Adjusted for brightness */
+}
+
 .glitch {
-    font-size: 100px;
-    color: #f8ef02; /* Neon yellow for the main text */
+    font-size: 200px;
+    color: cyan; /* Neon yellow for the main text */
     position: relative;
     user-select: none;
     white-space: nowrap;
+    z-index: 5; /* Ensures yellow text is on top */
     animation: glitchAnimation 2.5s infinite;
 }
 
@@ -41,23 +58,18 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    color: #00ffd2; /* Cyan color */
-    opacity: 0.5;
+    color: #f8ef02; /* Cyan color */
+    opacity: 0.5; /* Making the shadow layers slightly transparent for depth */
+    z-index: 1; /* Both layers below the main text */
+    animation: glitchAnimation 2.5s infinite; /* Use the same animation as the main text */
 }
 
 .glitch::before {
-    left: -2px;
-    text-shadow: 2px 0 cyan;
-    animation: glitchLayer1 2.5s infinite linear alternate-reverse;
-    z-index: 2;
+    text-shadow: 5px 0 cyan;
 }
 
 .glitch::after {
-    left: 2px;
-    text-shadow: -2px 0 cyan;
-    animation: glitchLayer2 2.5s infinite linear alternate;
-    z-index: 1;
+    text-shadow: -5px 0 cyan;
 }
 
 .year {
@@ -65,42 +77,61 @@ body {
     color: #00ffd2; /* Cyan color */
     font-size: 60px;
     position: relative;
-    top: -20px;
-    left: 50%;
+    top: 90px;
+    left: -30%;
     transform: translateX(-50%);
     z-index: 3;
 }
 
 .button {
-    background-color: #f27121;
-    color: white;
-    border: none;
+    font-family: 'Oxanium', sans-serif;
+    font-size: 30px;
+    color: #f8ef02; /* Black text */
+    background: rgba(0, 0, 0, 0); /* Transparent background */
+    border: 2px solid #f8ef02; /* Black border */
     padding: 12px 24px;
-    font-size: 18px;
+    position: relative;
+    top: 70px;
+    left: -4.3%;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 0; /* Remove border radius */
+    clip-path: polygon(0 0, 98% 0, 98% 15%, 100% 15%, 100% 100%, 2% 100%, 2% 85%, 0 85%);
 }
 
 .button:hover {
-    background-color: #e94057;
+    background-color: #f8ef02; /* Yellow background on hover */
+    color: #610a0a; /* Red text on hover */
 }
 
-@keyframes glitchLayer1 {
+@keyframes glitchBackground {
     0%, 100% {
-        clip-path: polygon(0 25%, 100% 20%, 100% 85%, 0 90%);
+        background: #610a0a; /* Stable, brighter red background */
     }
-    50% {
-        clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
-    }
-}
-
-@keyframes glitchLayer2 {
-    0%, 100% {
-        clip-path: polygon(0 10%, 100% 0, 100% 75%, 0 85%);
-    }
-    50% {
-        clip-path: polygon(0 30%, 100% 30%, 100% 30%, 0 30%);
+    5%, 10%, 15%, 20%, 25%, 30%, 35%, 40%, 45%, 50%, 55%, 60%, 65%, 70%, 75%, 80%, 85%, 90%, 95% {
+        background: 
+            linear-gradient(90deg, 
+            #610a0a 0%,
+            rgba(34,0,0,0.1) 5%,
+            #610a0a 10%,
+            rgba(34,0,0,0.05) 15%,
+            #610a0a 20%,
+            rgba(34,0,0,0.1) 25%,
+            #610a0a 30%,
+            rgba(34,0,0,0.05) 35%,
+            #610a0a 40%,
+            rgba(34,0,0,0.1) 45%,
+            #610a0a 50%,
+            rgba(34,0,0,0.05) 55%,
+            #610a0a 60%,
+            rgba(34,0,0,0.1) 65%,
+            #610a0a 70%,
+            rgba(34,0,0,0.05) 75%,
+            #610a0a 80%,
+            rgba(34,0,0,0.1) 85%,
+            #610a0a 90%,
+            rgba(34,0,0,0.05) 95%,
+            #610a0a 100%);
     }
 }
 
