@@ -36,7 +36,7 @@ body {
     right: 0;
     bottom: 0;
     background: #610a0a; /* Initial solid color */
-    animation: glitchBackground 2.5s infinite;
+    animation: glitchBackground 2s infinite;
     filter: contrast(200%) brightness(120%); /* Adjusted for brightness */
 }
 
@@ -102,6 +102,7 @@ body {
 .button:hover {
     background-color: #f8ef02; /* Yellow background on hover */
     color: #610a0a; /* Red text on hover */
+    animation: glitchAnimation 1s infinite;
 }
 
 @keyframes glitchBackground {
@@ -175,5 +176,29 @@ body {
             -1px 1px 0px #00ff00,
             1px 1px 0px #ff0000;
         transform: translate(1px, -1px);
+    }
+}
+
+@keyframes buttonGlitchAnimation {
+    0%, 100% {
+        transform: translate(0);
+        color: #f8ef02; /* Yellow text */
+        background-color: rgba(0, 0, 0, 0); /* Transparent background */
+    }
+    10%, 90% {
+        transform: translate(-1px, 1px);
+        color: #ff00ff;
+    }
+    20%, 80% {
+        transform: translate(-1px, -1px);
+        color: #0000ff;
+    }
+    30%, 70% {
+        transform: translate(1px, 3px);
+        color: #00ff00;
+    }
+    40%, 60% {
+        transform: translate(1px, -1px);
+        color: #ff0000;
     }
 }
