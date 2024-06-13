@@ -1,13 +1,22 @@
-console.log("Script Loaded"); // Check if the new script is loaded
-console.log(THREE); // Inspect the THREE object to ensure it's loaded properly
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three/build/three.module.js';
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/GLTFLoader.js';
 
-let scene, camera, renderer;
+console.log("Script Loaded");
+console.log(THREE);
+
+let scene, camera, renderer, controls;
+
+document.addEventListener('DOMContentLoaded', function () {
+    init();
+    document.querySelector('.button').addEventListener('click', startJourney);
+});
 
 function init() {
-    console.log("Initializing scene"); // Debugging statement
+    console.log("Initializing scene");
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 10, 50);
+    camera.position.set(0, 100, 300);
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -16,36 +25,38 @@ function init() {
     const ambientLight = new THREE.AmbientLight(0x404040);
     scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
-    pointLight.position.set(10, 20, 20);
+    const pointLight = new THREE.PointLight(0xffffff, 1, 500);
+    pointLight.position.set(50, 100, 100);
     scene.add(pointLight);
 
-    const cubeGeometry = new THREE.BoxGeometry();
-    const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    cube.position.set(0, 0, 0);
-    scene.add(cube);
+    const loader = new GLTFLoader();
+    loader.load('CyberCity/scene.gltf', function (gltf) {
+        gltf.scene.scale.set(20, 20, 20);
+        gltf.scene.position.set(0, -10, 0);
+        scene.add(gltf.scene);
+        console.log('Model loaded successfully');
+    }, undefined, function (error) {
+        console.error('An error happened while loading the model:', error);
+    });
 
-    const torusGeometry = new THREE.TorusKnotGeometry(5, 1.5, 100, 16);
-    const torusMaterial = new THREE.MeshStandardMaterial({ color: 0xff6347, wireframe: true });
-    const torusKnot = new THREE.Mesh(torusGeometry, torusMaterial);
-    torusKnot.position.set(0, 0, -10);
-    scene.add(torusKnot);
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 10;
+    controls.maxDistance = 500;
+    controls.maxPolarAngle = Math.PI / 2;
 
     animate();
 }
 
 function animate() {
     requestAnimationFrame(animate);
+    controls.update();
     renderer.render(scene, camera);
 }
 
 function startJourney() {
-    // Hide the title screen and show the main content
     document.getElementById('titleScreen').style.display = 'none';
-    // Assuming you have an element with id 'viewport' where the 3D scene will be shown
     document.getElementById('viewport').style.display = 'block';
 }
-
-
-init(); // Call init to setup our scene
