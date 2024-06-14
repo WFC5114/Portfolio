@@ -1,62 +1,67 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three/build/three.module.js';
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/GLTFLoader.js';
+document.addEventListener('DOMContentLoaded', () => {
+    const scenes = [];
 
-console.log("Script Loaded");
-console.log(THREE);
+    function initThreeJS() {
+        document.querySelectorAll('.folder').forEach((elem) => {
+            const canvas = elem.querySelector('canvas');
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(elem.offsetWidth, elem.offsetHeight);
 
-let scene, camera, renderer, controls;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, elem.offsetWidth / elem.offsetHeight, 0.1, 1000);
+            camera.position.z = 5;
 
-document.addEventListener('DOMContentLoaded', function () {
-    init();
-    document.querySelector('.button').addEventListener('click', startJourney);
-});
+            // Define the shape of a folder (correct orientation)
+            const folderShape = new THREE.Shape();
+            folderShape.moveTo(0, 1.5);
+            folderShape.lineTo(0, 0);
+            folderShape.lineTo(2, 0);
+            folderShape.lineTo(2, 1.2);
+            folderShape.lineTo(1.2, 1.2);
+            folderShape.lineTo(1, 1.5);
+            folderShape.lineTo(0, 1.5);
 
-function init() {
-    console.log("Initializing scene");
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 100, 300);
+            const extrudeSettings = { depth: 0.1, bevelEnabled: false };
+            const geometry = new THREE.ExtrudeGeometry(folderShape, extrudeSettings);
+            const material = new THREE.MeshBasicMaterial({ color: '#c5a15b', transparent: true, opacity: 1 });
+            const folder = new THREE.Mesh(geometry, material);
+            scene.add(folder);
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById('viewport').appendChild(renderer.domElement);
+            // Shadow folders initially hidden and positioned to the right and slightly behind
+            const shadowMaterial = new THREE.MeshBasicMaterial({ color: '#c5a15b', transparent: true, opacity: 0 });
+            const shadowFolder1 = new THREE.Mesh(geometry, shadowMaterial);
+            shadowFolder1.position.set(-1, 0, -1);  // More to the right and slightly behind the main folder
+            scene.add(shadowFolder1);
 
-    const ambientLight = new THREE.AmbientLight(0x404040);
-    scene.add(ambientLight);
+            const shadowFolder2 = new THREE.Mesh(geometry, shadowMaterial);
+            shadowFolder2.position.set(0, 0, -2);  // Even further to the right and behind
+            scene.add(shadowFolder2);
 
-    const pointLight = new THREE.PointLight(0xffffff, 1, 500);
-    pointLight.position.set(50, 100, 100);
-    scene.add(pointLight);
+            scenes.push({ scene, camera, renderer, elements: { folder, shadowFolder1, shadowFolder2 } });
 
-    const loader = new GLTFLoader();
-    loader.load('CyberCity/scene.gltf', function (gltf) {
-        gltf.scene.scale.set(20, 20, 20);
-        gltf.scene.position.set(0, -10, 0);
-        scene.add(gltf.scene);
-        console.log('Model loaded successfully');
-    }, undefined, function (error) {
-        console.error('An error happened while loading the model:', error);
-    });
+            elem.addEventListener('mouseenter', () => {
+                gsap.to(folder.position, { x: -0.6, z: 3, duration: 0.5 }); // Move the folder leftwards and towards the camera
+                gsap.to(folder.rotation, { y: Math.PI * 0.5, duration: 0.5 }); // Rotate the folder
+                gsap.to(shadowFolder1.material, { opacity: 0.5, duration: 0.5 });
+                gsap.to(shadowFolder2.material, { opacity: 0.25, duration: 0.5 });
+            });
 
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.25;
-    controls.screenSpacePanning = false;
-    controls.minDistance = 10;
-    controls.maxDistance = 500;
-    controls.maxPolarAngle = Math.PI / 2;
+            elem.addEventListener('mouseleave', () => {
+                gsap.to(folder.position, { x: 0, z: 0, duration: 0.5 }); // Move the folder back to its original position
+                gsap.to(folder.rotation, { y: 0, duration: 0.5 }); // Rotate the folder back
+                gsap.to(shadowFolder1.material, { opacity: 0, duration: 0.5 });
+                gsap.to(shadowFolder2.material, { opacity: 0, duration: 0.5 });
+            });
+        });
+    }
 
+    function animate() {
+        requestAnimationFrame(animate);
+        scenes.forEach((obj) => {
+            obj.renderer.render(obj.scene, obj.camera);
+        });
+    }
+
+    initThreeJS();
     animate();
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
-}
-
-function startJourney() {
-    document.getElementById('titleScreen').style.display = 'none';
-    document.getElementById('viewport').style.display = 'block';
-}
+});

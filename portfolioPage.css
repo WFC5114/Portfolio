@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'Oxanium';
+    src: url('fonts/Oxanium.woff2') format('woff2');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(at top right, 
+                                #160d24 0%,    /* Very dark purple */
+                                #201a2f 25%,   /* Dark blue-purple */
+                                #2d2138 50%,   /* Subdued purple */
+                                #3b2c40 75%,   /* Dark gray-purple */
+                                #4a3830 100%); /* Deep, brownish gold */
+    color: #c5a15b; /* Subdued gold color for text */
+    font-family: 'Oxanium', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 90%;
+    width: 90%;
+}
+
+.folder {
+    position: relative;
+    width: 500px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.folder-content {
+    position: relative;
+    width: 300px;
+    height: 200px;
+}
+
+.folder canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.folder h2 {
+    position: absolute;
+    bottom: 250px;
+    left: 75%;
+    transform: translateX(-50%);
+    color: #c5a15b;
+    text-shadow: 0 0 8px rgba(197, 161, 91, 0.8);
+    font-size: 1.2em;
+    margin: 0;
+    text-align: center;
+    pointer-events: none; /* Ensure the text doesn't interfere with mouse events */
+}
+
+h1 {
+    color: #c5a15b;
+    text-shadow: 0 0 10px rgba(197, 161, 91, 0.8);
+}
+
+.top-line, .bottom-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #c5a15b;
+}
+
+.top-line {
+    top: 0;
+}
+
+.bottom-line {
+    bottom: 0;
+}

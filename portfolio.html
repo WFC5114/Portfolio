@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wei Chen Portfolio</title>
+    <link rel="stylesheet" href="portfolioPage.css">
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="top-line"></div>
+        <div class="bottom-line"></div>
+        <div id="about">
+            <h1>Wei Chen</h1>
+            <p>Welcome to my portfolio! Explore my projects and contact information through the interactive folders.</p>
+            <section>
+                <h2>About Me</h2>
+                <h3>Education</h3>
+                <p>I am currently pursuing my Master’s degree in Computer Science with a specialization in Cybersecurity at Boston University, where I have been studying since September 2022. Prior to this, I earned my Bachelor’s degree in Cybersecurity from The Pennsylvania State University, graduating in May 2022.</p>
+                
+                <h3>Technical Skills</h3>
+                <p>I have developed a strong proficiency in several programming languages, including Java, JavaScript, Python, C, C++, R, SQL, GO, and PowerShell. My familiarity with operating systems spans Windows, Ubuntu, and Kali Linux. Additionally, I am well-versed in using various software tools such as Wireshark, AccessData FTK Imager, Splunk, Nmap, Snort, and Metasploit. My cybersecurity expertise includes SQL Injection, Malware Analysis, Digital Forensics, and Data Recovery. I also have a solid understanding of compliance standards like GDPR, HIPAA, and PCI-DSS, along with experience in risk assessment, incident response, disaster recovery, and business continuity. My knowledge extends to regulations concerning data protection, privacy laws, and ethical standards.</p>
+            </section>
+        </div>
+        <div class="folder" onclick="location.href='projects.html';">
+            <canvas id="projectsCanvas"></canvas>
+            <div class="folder-content">
+                <h2>Projects</h2>
+            </div>
+        </div>
+        <div class="folder" onclick="location.href='contact.html';">
+            <canvas id="contactCanvas"></canvas>
+            <div class="folder-content">
+                <h2>Contact</h2>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
